@@ -1,0 +1,43 @@
+<html>
+<head>
+    <title>My Jetty Server Page</title>
+</head>
+<body>
+<center>
+    <button type="button" onclick="JettyTest()">Connect</button>
+    <p><label for="textfield">Enter you message</label></p>
+    <p><input id="textfield" type="text" name="textmessage" value="Your message " size="50"></p>
+    <p>
+        <button type="button" onclick="TextField()">Send</button>
+    </p>
+</center>
+<script type="text/javascript">
+    var websocket;
+    var hr = window.location.href;
+    var host = hr.substring(hr.lastIndexOf("//") + 1);
+
+    function JettyTest() {
+        websocket = new WebSocket("ws:/" + host);
+
+        websocket.onopen = function () {
+
+        };
+        websocket.onmessage = function (msg) {
+            var message = msg.data;
+            alert("Received message: " + message);
+
+        };
+        websocket.onclose = function () {
+            alert("Connection is closed now");
+        };
+
+    }
+    function TextField() {
+
+        websocket.send(document.getElementById("textfield").value);
+
+    }
+
+</script>
+</body>
+</html>
